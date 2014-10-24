@@ -1,0 +1,19 @@
+{
+  "name": "perfection",
+  "version": "0.0.0",
+  "authors": [
+    "datashaman <marlinf@datashaman.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pouchdb": "~3.0.6"
+  }
+}
