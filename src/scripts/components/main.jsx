@@ -1,12 +1,11 @@
 /** @jsx React.DOM */
 
-var PerfectionApp = require('./PerfectionApp');
-var React = require('react');
-var {DefaultRoute, Route, Routes} = require('react-router');
+var React = require('react'),
+    {DefaultRoute, Route, Routes} = require('react-router'),
+    TodoApp = require('./TodoApp');
 
 React.renderComponent((
-  <Routes location="history">
-    <Route path="/" handler={PerfectionApp}>
-    </Route>
-  </Routes>
+    <Routes location="history">
+        <Route path="/" handler={TodoApp} />
+    </Routes>
 ), document.getElementById('content'));

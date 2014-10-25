@@ -11,7 +11,9 @@
   "mainOutput": "main",
   "dependencies": {
     "react": "~0.11.2",
-    "react-router": "^0.7.0"
+    "react-bootstrap": "^0.12.0",
+    "react-router": "^0.7.0",
+    "reflux": "^0.1.13"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
