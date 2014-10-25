@@ -6,7 +6,7 @@
 
 var React = require('react/addons'),
     Reflux = require('reflux'),
-    PouchStore = require('../stores/PouchStore');
+    PouchStore = require('./../stores/PouchStore');
 
 // Export React so the devtools can find it
 (window !== window.top ? window.top : window).React = React;
