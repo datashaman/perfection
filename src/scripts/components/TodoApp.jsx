@@ -17,9 +17,9 @@ require('../../styles/normalize.css');
 
 var TodoStore = PouchStore.createStore({
     local: 'todos',
-    remote: 'http://localhost:5984/todos' /*,
+    remote: 'http://localhost:5984/todos',
     username: 'datashaman',
-    password: 'Gargle12' */
+    password: 'Gargle12'
 });
 
 var TodoApp = React.createClass({
@@ -32,6 +32,13 @@ var TodoApp = React.createClass({
             doc = { title: title.value };
         title.value = '';
         TodoStore.actions.post(doc);
+    },
+    putTodo: function() {
+        var title = this.refs.title.getDOMNode(),
+            dataset = e.target.parentNode.dataset,
+            doc = { _id: dataset.id, _rev: dataset.rev, title: title.value };
+        title.value = '';
+        TodoStore.actions.put(doc);
     },
     removeTodo: function (e) {
         var dataset = e.target.parentNode.dataset,
