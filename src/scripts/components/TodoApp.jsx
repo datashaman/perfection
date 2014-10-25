@@ -17,7 +17,9 @@ require('../../styles/normalize.css');
 
 var TodoStore = PouchStore.createStore({
     local: 'todos',
-    remote: 'http://localhost:5984/todos'
+    remote: 'http://localhost:5984/todos' /*,
+    username: 'datashaman',
+    password: 'Gargle12' */
 });
 
 var TodoApp = React.createClass({
@@ -25,11 +27,11 @@ var TodoApp = React.createClass({
     getInitialState: function() {
         return { rows: [] };
     },
-    addTodo: function() {
+    postTodo: function() {
         var title = this.refs.title.getDOMNode(),
             doc = { title: title.value };
         title.value = '';
-        TodoStore.actions.add(doc);
+        TodoStore.actions.post(doc);
     },
     removeTodo: function (e) {
         var dataset = e.target.parentNode.dataset,
@@ -47,12 +49,12 @@ var TodoApp = React.createClass({
         }.bind(this));
 
         return <div className="main">
-                <input type="text" ref="title" placeholder="Enter text here" /><button onClick={this.addTodo}>Submit</button>
+                <input type="text" ref="title" placeholder="Enter text here" /><button onClick={this.postTodo}>Submit</button>
                 <ul>{rows}</ul>
             </div>;
     }
 });
 
-TodoStore.actions.load();
+TodoStore.actions.allDocs();
 
 module.exports = TodoApp;
