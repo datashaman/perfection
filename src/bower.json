@@ -4,6 +4,7 @@
   "authors": [
     "datashaman <marlinf@datashaman.com>"
   ],
+  "main": "",
   "license": "MIT",
   "private": true,
   "ignore": [
@@ -15,6 +16,7 @@
   ],
   "dependencies": {
     "pouchdb": "~3.0.6",
-    "pouchdb-authentication": "~0.3.6"
+    "pouchdb-authentication": "~0.3.6",
+    "bootstrap": "~3.2.0"
   }
 }

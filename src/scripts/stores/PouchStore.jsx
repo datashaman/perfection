@@ -6,19 +6,29 @@
 
 var Reflux = require('reflux'),
     createStore = function (options) {
+        if (typeof options.liveSync == 'undefined') {
+            options.liveSync = true;
+        }
+
         var actions = Reflux.createActions([ 'post', 'put', 'remove', 'allDocs' ]),
             store = Reflux.createStore({
                 listenables: actions,
                 init: function () {
                     this.local = new PouchDB(options.local);
 
+                    this.local.changes().on('change', function () {
+                        actions.allDocs();
+                    });
+
                     if (options.remote) {
                         this.remote = new PouchDB(options.remote);
 
-                        if (options.username && options.password) {
-                            this.remoteLogin(options.username, options.password, this.sync);
-                        } else {
-                            this.sync();
+                        if (options.liveSync) {
+                            if (options.username && options.password) {
+                                this.remoteLogin(options.username, options.password, this.liveSync);
+                            } else {
+                                this.liveSync();
+                            }
                         }
                     }
                 },
@@ -26,9 +36,9 @@ var Reflux = require('reflux'),
                     var self = this;
                     return function (error, response) {
                         if (error) {
-                            console.error(error);
+                            return console.error(error);
                         } else {
-                            callback.call(self, response);
+                            return callback.call(self, response);
                         }
                     };
                 },
@@ -52,29 +62,32 @@ var Reflux = require('reflux'),
                         function (error, response) {
                             if (error) {
                                 if (error.name == "unauthorized") {
-                                    alert(error.message);
+                                    return alert(error.message);
                                 } else {
-                                    console.error(error);
+                                    return console.error(error);
                                 }
                             } else {
-                                callback.call(self, response);
+                                return callback.call(self, response);
                             }
                         }
                     );
                 },
-                sync: function () {
+                liveSync: function () {
                     return PouchDB.sync(this.local, this.remote, { live: true })
                         .on('change', function (info) {
-                            actions.allDocs();
+                            // console.log('[Change] ', info);
+                            if (info.direction == 'pull') {
+                                actions.allDocs();
+                            }
                         })
                         .on('complete', function (error) {
-                            console.error(error);
+                            console.error('[Complete]', error);
                         })
                         .on('uptodate', function (info) {
-                            console.log(info);
+                            // console.log('[Up-to-date]', info);
                         })
                         .on('error', function (error) {
-                            console.error(error);
+                            console.error('[Error]', error);
                         });
                 }
             });

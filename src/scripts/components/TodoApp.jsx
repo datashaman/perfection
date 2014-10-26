@@ -5,8 +5,10 @@
 'use strict';
 
 var React = require('react/addons'),
+    Button = require('react-bootstrap/Button'),
+    Input = require('react-bootstrap/Input'),
     Reflux = require('reflux'),
-    PouchStore = require('./../stores/PouchStore');
+    PouchStore = require('../stores/PouchStore');
 
 // Export React so the devtools can find it
 (window !== window.top ? window.top : window).React = React;
@@ -27,17 +29,19 @@ var TodoApp = React.createClass({
     getInitialState: function() {
         return { rows: [] };
     },
-    postTodo: function() {
-        var title = this.refs.title.getDOMNode(),
-            doc = { title: title.value };
-        title.value = '';
+    postTodo: function(e) {
+        e.preventDefault();
+        var title = this.refs.title,
+            doc = { title: title.getValue() };
+        title.getInputDOMNode().value = '';
         TodoStore.actions.post(doc);
+        return false;
     },
     putTodo: function() {
-        var title = this.refs.title.getDOMNode(),
+        var title = this.refs.title,
             dataset = e.target.parentNode.dataset,
-            doc = { _id: dataset.id, _rev: dataset.rev, title: title.value };
-        title.value = '';
+            doc = { _id: dataset.id, _rev: dataset.rev, title: title.getValue() };
+        title.getInputDOMNode().value = '';
         TodoStore.actions.put(doc);
     },
     removeTodo: function (e) {
@@ -55,10 +59,13 @@ var TodoApp = React.createClass({
             </li>;
         }.bind(this));
 
-        return <div className="main">
-                <input type="text" ref="title" placeholder="Enter text here" /><button onClick={this.postTodo}>Submit</button>
+        return  <div className="app">
+                <form style={{ margin: 20, width: 400 }}>
+                    <Input ref="title" type="text" placeholder="Enter text here" />
+                    <Input type="submit" bsSize="xsmall" bsStyle="primary" onClick={this.postTodo} value="Submit" /><br/>
+                </form>
                 <ul>{rows}</ul>
-            </div>;
+                </div>;
     }
 });
 

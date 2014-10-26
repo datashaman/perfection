@@ -83,6 +83,7 @@ module.exports = function (grunt) {
             expand: true,
             src: ['<%= pkg.src %>/*'],
             dest: '<%= pkg.dist %>/',
+            exclude: ['bower.json'],
             filter: 'isFile'
           },
           {
@@ -91,6 +92,13 @@ module.exports = function (grunt) {
             src: ['<%= pkg.src %>/images/*'],
             dest: '<%= pkg.dist %>/images/'
           },
+          {
+            flatten: false,
+            expand: true,
+            cwd: 'src/bower_components',
+            src: ['**'],
+            dest: '<%= pkg.dist %>/bower_components/'
+          }
         ]
       }
     },
@@ -104,6 +112,21 @@ module.exports = function (grunt) {
           ]
         }]
       }
+    },
+
+    wiredep: {
+        target: {
+            src: [
+                'src/index.html',
+                'src/styles/**/*.sass'
+            ],
+            options: {
+                cwd: 'src',
+                exclude: [
+                    'bower_components/react/react.js'
+                ]
+            }
+        }
     }
   });
 
@@ -117,6 +140,8 @@ module.exports = function (grunt) {
       'webpack-dev-server'
     ]);
   });
+
+  grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask('test', ['karma']);
 

@@ -33,7 +33,11 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    moduleDirectories: [
+        'node_modules',
+        'bower_components'
+    ]
   },
 
   module: {

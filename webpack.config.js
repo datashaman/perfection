@@ -29,7 +29,11 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    modulesDirectories: [
+        'node_modules',
+        'bower_components'
+    ]
   },
 
   module: {
@@ -54,6 +58,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
-  ]
+  ],
 
+  externals: {
+  }
 };
