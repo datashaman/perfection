@@ -1,7 +1,3 @@
-/**
- * @jsx React.DOM
- */
-
 'use strict';
 
 var events = require('events');
@@ -13,7 +9,7 @@ function handleError (callback) {
     return function (error, response) {
         if (error) {
             return console.error(error);
-        } else {
+        } else if (callback) {
             return callback(response);
         }
     }
@@ -57,17 +53,16 @@ module.exports = {
             var action = payload.action,
                 args = payload.args;
 
+            if (requireType && !args.type) {
+                throw new Error('type must be specified');
+            }
+
             switch (action) {
                 case PouchStoreActions._constants.POST:
-                    if (requireType && !args.type) {
-                        throw new Error('type must be specified');
-                    }
-                    args.username = options.username;
-                    return local.post(args, handleError(updateAllDocs));
                 case PouchStoreActions._constants.PUT:
-                    return local.put(args, handleError(updateAllDocs));
+                    return local.put(args, handleError());
                 case PouchStoreActions._constants.REMOVE:
-                    return local.remove(args, handleError(updateAllDocs));
+                    return local.remove(args, handleError());
                 default:
                     // ignore
             };
