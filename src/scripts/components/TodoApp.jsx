@@ -4,71 +4,86 @@
 
 'use strict';
 
-var React = require('react/addons'),
-    Button = require('react-bootstrap/Button'),
-    Input = require('react-bootstrap/Input'),
-    Reflux = require('reflux'),
-    PouchStore = require('../stores/PouchStore');
-
-// Export React so the devtools can find it
-(window !== window.top ? window.top : window).React = React;
-
-// CSS
 require('../../styles/normalize.css');
 // require('../../styles/main.css');
 
-var TodoStore = PouchStore.createStore({
-    local: 'todos',
-    remote: 'http://localhost:5984/todos',
-    username: 'datashaman',
-    password: 'Gargle12'
-});
+var BS = require('react-bootstrap');
 
-var TodoApp = React.createClass({
-    mixins: [ Reflux.connect(TodoStore) ],
-    getInitialState: function() {
-        return { rows: [] };
+var AppFactory = require('../factories/AppFactory');
+var PouchStoreActions = require('../actions/PouchStoreActions');
+var TodoStore = require('../stores/TodoStore');
+
+var moment = require('moment');
+
+var TodoApp = AppFactory.createApp({
+    todos: TodoStore,
+}, {
+    _getStateFromStores: function () {
+        var state = {
+            todos: this.stores.todos.getAllDocs().rows
+        };
+        return state;
     },
-    postTodo: function(e) {
+    _postTodo: function(e) {
         e.preventDefault();
         var title = this.refs.title,
-            doc = { title: title.getValue() };
+            date = new Date(),
+            doc = {
+                _id: date.toISOString(),
+                title: title.getValue(),
+                type: 'todo'
+            };
         title.getInputDOMNode().value = '';
-        TodoStore.actions.post(doc);
-        return false;
+        PouchStoreActions.post(doc);
     },
-    putTodo: function() {
+    _putTodo: function() {
         var title = this.refs.title,
             dataset = e.target.parentNode.dataset,
-            doc = { _id: dataset.id, _rev: dataset.rev, title: title.getValue() };
+            doc = {
+                _id: dataset.id,
+                _rev: dataset.rev,
+                title: title.getValue()
+            };
         title.getInputDOMNode().value = '';
-        TodoStore.actions.put(doc);
+        PouchStoreActions.put(doc);
     },
-    removeTodo: function (e) {
+    _removeTodo: function (e) {
         var dataset = e.target.parentNode.dataset,
             doc = { _id: dataset.id, _rev: dataset.rev };
-        TodoStore.actions.remove(doc);
+        PouchStoreActions.remove(doc);
     },
     render: function() {
-        var rows = this.state.rows.map(function (todo) {
-            return <li
-                key={todo.doc._id + '-' + todo.doc._rev}
-                data-id={todo.doc._id}
-                data-rev={todo.doc._rev}>
-                {todo.doc.title} <span onClick={this.removeTodo}>X</span>
-            </li>;
-        }.bind(this));
+        var todos = this.state.todos
+            .filter(function (row) {
+                return row.doc.type == 'todo';
+            })
+            .map(function (todo) {
+                var date = moment(todo.doc._id),
+                    remove;
+                if (todo.doc.username == this.stores.todos.options.username) {
+                    remove = <BS.Glyphicon onClick={this._removeTodo} glyph="trash" />;
+                } else {
+                    remove = '';
+                }
+                return <div key={ todo.doc._id + ':' + todo.doc._key }
+                        styles={{ marginBottom: 12 }}
+                        data-id={todo.doc._id}
+                        data-rev={todo.doc._rev}>
+                        <BS.Badge>{ todo.doc.username }</BS.Badge> <b>{todo.doc.title}</b> {remove}<br />
+                        <div className="muted">{date.fromNow()}</div>
+                    </div>;
+            }.bind(this));
 
         return  <div className="app">
-                <form style={{ margin: 20, width: 400 }}>
-                    <Input ref="title" type="text" placeholder="Enter text here" />
-                    <Input type="submit" bsSize="xsmall" bsStyle="primary" onClick={this.postTodo} value="Submit" /><br/>
-                </form>
-                <ul>{rows}</ul>
-                </div>;
+        <BS.Panel>
+            {todos}
+
+            <form style={{ marginTop: 12, width: 400 }} onSubmit={this._postTodo}>
+                <BS.Input ref="title" type="text" placeholder="Enter text here" />
+            </form>
+        </BS.Panel>
+        </div>;
     }
 });
-
-TodoStore.actions.allDocs();
 
 module.exports = TodoApp;

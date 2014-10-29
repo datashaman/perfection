@@ -20,7 +20,7 @@ module.exports = {
   devtool: false,
   entry: [
       'webpack/hot/only-dev-server',
-      './src/scripts/components/<%= pkg.mainInput %>.jsx'
+      './src/scripts/<%= pkg.mainInput %>.jsx'
   ],
 
   stats: {
@@ -58,8 +58,5 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
-  ],
-
-  externals: {
-  }
+  ]
 };

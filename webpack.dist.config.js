@@ -18,7 +18,7 @@ module.exports = {
 
   debug: false,
   devtool: false,
-  entry: './src/scripts/components/<%= pkg.mainInput %>.jsx',
+  entry: './src/scripts/<%= pkg.mainInput %>.jsx',
 
   stats: {
     colors: true,
