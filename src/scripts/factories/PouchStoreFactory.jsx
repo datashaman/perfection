@@ -20,7 +20,7 @@ module.exports = {
         var emitter = new events.EventEmitter(),
             liveSync = typeof options.liveSync == 'undefined' ? true : options.liveSync,
             requireType = typeof options.requireType == 'undefined' ? false : options.requireType,
-            local = new PouchDB(local),
+            local = new PouchDB(local, { adapter: 'websql' }),
             remote,
             allDocs = {
                 rows: []
