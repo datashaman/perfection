@@ -9,6 +9,7 @@ Interesting bits:
 * Flux architecture
 * PouchDB local storage in browser
 * Remote sychronization to CouchDB
+* Operates offline, will synch when online
 
 It works well with more than one person synching
 to the same remote.
