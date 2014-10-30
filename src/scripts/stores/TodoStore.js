@@ -1,9 +1,8 @@
 var PouchStoreFactory = require('../factories/PouchStoreFactory');
 
-module.exports = PouchStoreFactory.createStore( 'todos', {
-    local: 'todos',
-    remote: 'https://datashaman.couchappy.com/todos',
-    username: 'datashaman',
-    password: 'Gargle12',
+module.exports = PouchStoreFactory.createStore( 'dbname', {
+    remote: 'https://username.couchappy.com/dbname',
+    username: 'username',
+    password: 'password',
     requireType: true
 });
