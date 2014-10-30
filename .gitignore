@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 # App specific
 assets/
 bower_components/
+dist/
 node_modules/
 .tmp
 /src/scripts/main.js

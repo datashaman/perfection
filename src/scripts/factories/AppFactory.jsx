@@ -24,7 +24,7 @@ var StoresMixin = function (stores) {
     };
 };
 
-createApp = function (stores, options) {
+var createApp = function (stores, options) {
     options.stores = stores;
     options.mixins = options.mixins || [];
     options.mixins.unshift(StoresMixin(stores));
