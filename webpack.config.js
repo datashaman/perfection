@@ -47,6 +47,9 @@ module.exports = {
       test: /\.jsx$/,
       loader: 'react-hot!jsx-loader?harmony'
     }, {
+      test: /\.js$/,
+      loader: 'envify-loader'
+    }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
     }, {
