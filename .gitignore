@@ -29,6 +29,8 @@ $RECYCLE.BIN/
 assets/
 bower_components/
 dist/
+local.env
 node_modules/
+fig.yml
 .tmp
 /src/scripts/main.js

@@ -51,6 +51,10 @@ var TodoApp = AppFactory.createApp({
 
         return  <div className="app">
         <BS.Panel>
+            <p>
+                Connected to {this.stores.todos.options.remote}
+            </p>
+
             {todos}
 
             <form style={{ marginTop: 12, width: 400 }} onSubmit={this._createTodo}>
@@ -58,6 +62,11 @@ var TodoApp = AppFactory.createApp({
             </form>
         </BS.Panel>
         </div>;
+    },
+    componentDidMount: function() {
+        setInterval(function() {
+            this.forceUpdate();
+        }.bind(this), 1000);
     }
 });
 

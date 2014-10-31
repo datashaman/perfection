@@ -1,0 +1,11 @@
+web:
+    environment:
+        LOCAL: dbname
+        REMOTE: https://username.couchappy.com/dbname
+        REMOTE_USERNAME: username
+        REMOTE_PASSWORD: password
+    build: .
+    ports:
+      - "9000:8000"
+    volumes:
+      - .:/code
