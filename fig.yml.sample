@@ -6,6 +6,6 @@ web:
         REMOTE_PASSWORD: password
     build: .
     ports:
-      - "9000:8000"
+      - "8000:8000"
     volumes:
       - .:/code

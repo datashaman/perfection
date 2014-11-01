@@ -1,6 +1,7 @@
 install:
 	npm install
 	bower install
+	cp -n fig.yml.sample fig.yml
 
 build:
 	docker build -t datashaman/perfection .
