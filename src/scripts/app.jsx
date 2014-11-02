@@ -1,6 +1,6 @@
 var React = require('react');
 window.React = React;
 
-var TodoApp = require('./elements/TodoApp');
+var BlogApp = require('./elements/BlogApp');
 
-React.render(<TodoApp />, document.getElementById('content'));
+React.render(<BlogApp />, document.getElementById('content'));

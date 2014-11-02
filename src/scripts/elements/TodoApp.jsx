@@ -9,19 +9,21 @@ var BS = require('react-bootstrap');
 var AppFactory = require('../factories/AppFactory');
 var EditActions = require('../actions/EditActions');
 var PouchStoreActions = require('../actions/PouchStoreActions');
+var BlogActions = require('../actions/BlogActions');
 var TodoStore = require('../stores/TodoStore');
-var TumblrStore = require('../stores/TumblrStore');
+var BlogStore = require('../stores/BlogStore');
 var Todo = require('./Todo');
 
 var moment = require('moment');
 
 var TodoApp = AppFactory.createApp({
     todos: TodoStore,
-    tumblr: TumblrStore,
+    blog: BlogStore
 }, {
     _getStateFromStores: function () {
         var state = {
-            todos: this.stores.todos.getAllDocs().rows
+            todos: this.stores.todos.getAllDocs().rows,
+            posts: this.stores.blog.getState().posts
         };
         return state;
     },

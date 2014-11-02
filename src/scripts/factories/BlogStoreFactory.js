@@ -2,7 +2,7 @@
 
 var events = require('events');
 var dispatcher = require('../dispatcher');
-var PouchStoreActions = require('../actions/PouchStoreActions');
+var BlogActions = require('../actions/BlogActions');
 var CHANGE_EVENT = 'change';
 
 function handleError (callback) {
@@ -22,7 +22,7 @@ module.exports = {
             requireType = typeof options.requireType == 'undefined' ? false : options.requireType,
             db = new PouchDB(db, { adapter: 'websql' }),
             remote,
-            allDocs = {
+            state = {
                 rows: []
             },
             store = {
@@ -32,39 +32,49 @@ module.exports = {
                 removeChangeListener: function (listener) {
                     emitter.removeListener(CHANGE_EVENT, listener);
                 },
-                getAllDocs: function () {
-                    return allDocs;
+                getState: function () {
+                    return state;
                 },
                 options: options
             };
 
-        function updateAllDocs () {
+        function updateState () {
             db.allDocs({ include_docs: true }, handleError(function (response) {
-                allDocs = response;
+                state = response;
                 emitter.emit(CHANGE_EVENT);
             }));
         }
 
         db.changes().on('change', function () {
-            updateAllDocs();
+            updateState();
         });
 
         store.dispatchToken = dispatcher.register(function (payload) {
             var action = payload.action,
-                args = payload.args;
-
-            if (requireType && !args.type) {
-                throw new Error('type must be specified');
-            }
+                args = payload.args,
+                date;
 
             switch (action) {
-                case PouchStoreActions._constants.POST:
-                case PouchStoreActions._constants.PUT:
+                case BlogActions._constants.CREATE:
+                    if (!args.postType) {
+                        throw new Error('postType must be specified');
+                    }
+
+                    args.type = 'post';
+
+                    date = new Date();
+                    args._id = date.toISOString();
+                case BlogActions._constants.UPDATE:
                     return db.put(args, handleError());
-                case PouchStoreActions._constants.REMOVE:
+                case BlogActions._constants.DELETE:
                     return db.remove(args, handleError());
+                case BlogActions._constants.PUBLISH:
+                    args.state = 'published';
+                    return db.put(args, handleError());
+                case BlogActions._constants.UNPUBLISH:
+                    args.state = 'draft';
+                    return db.put(args, handleError());
                 default:
-                    // ignore
             };
         });
 
@@ -91,7 +101,7 @@ module.exports = {
                 .on('change', function (info) {
                     // console.log('[Change] ', info);
                     if (info.direction == 'pull') {
-                        updateAllDocs();
+                        updateState();
                     }
                 })
                 .on('complete', function (error) {
@@ -117,7 +127,7 @@ module.exports = {
             }
         }
 
-        updateAllDocs();
+        updateState();
 
         return store;
     }

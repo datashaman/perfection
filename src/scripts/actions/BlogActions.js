@@ -4,7 +4,8 @@ var ActionsFactory = require('../factories/ActionsFactory');
 
 module.exports = ActionsFactory.createActions({
     CREATE: 'create',
-    EDIT: 'edit',
-    REBLOG: 'reblog',
+    UPDATE: 'update',
     DELETE: 'delete',
+    PUBLISH: 'publish',
+    UNPUBLISH: 'unpublish'
 });
