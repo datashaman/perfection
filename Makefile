@@ -3,7 +3,10 @@ install:
 	bower install
 	cp -n fig.yml.sample fig.yml
 
-build:
+grunt-build:
+	grunt build
+
+docker-build:
 	docker build -t datashaman/perfection .
 
 serve:

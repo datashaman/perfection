@@ -10,12 +10,14 @@ var AppFactory = require('../factories/AppFactory');
 var EditActions = require('../actions/EditActions');
 var PouchStoreActions = require('../actions/PouchStoreActions');
 var TodoStore = require('../stores/TodoStore');
+var TumblrStore = require('../stores/TumblrStore');
 var Todo = require('./Todo');
 
 var moment = require('moment');
 
 var TodoApp = AppFactory.createApp({
     todos: TodoStore,
+    tumblr: TumblrStore,
 }, {
     _getStateFromStores: function () {
         var state = {
