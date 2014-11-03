@@ -17,7 +17,7 @@
   "dependencies": {
     "pouchdb": "~3.0.6",
     "pouchdb-authentication": "~0.3.6",
-    "bootstrap": "~3.2.0",
+    "bootstrap": "~3.3.0",
     "photoset-grid": "*"
   }
 }

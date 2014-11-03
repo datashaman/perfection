@@ -10,12 +10,12 @@ module.exports = React.createClass({
 
         if (doc.description) {
             return <li className="post link">
-                <a href={doc.url} class="link">{doc.title}</a>
+                <a href={doc.url} class="link">{doc.name}</a>
                 <div class="description">{doc.description}</div>
               </li>;
         } else {
             return <li className="post link">
-                <a href={doc.url} class="link">{doc.title}</a>
+                <a href={doc.url} class="link">{doc.name}</a>
               </li>;
         }
     }

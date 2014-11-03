@@ -10,12 +10,12 @@ module.exports = React.createClass({
 
         if (doc.source) {
             return <li className="post quote">
-                "{doc.text}"
+                "{doc.quote}"
                 <div className="source">{ doc.source }</div>
               </li>;
         } else {
             return <li className="post quote">
-                "{doc.text}"
+                "{doc.quote}"
               </li>;
         }
     }

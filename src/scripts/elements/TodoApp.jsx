@@ -20,7 +20,7 @@ var TodoApp = AppFactory.createApp({
     todos: TodoStore,
     blog: BlogStore
 }, {
-    _getStateFromStores: function () {
+    getState: function () {
         var state = {
             todos: this.stores.todos.getAllDocs().rows,
             posts: this.stores.blog.getState().posts

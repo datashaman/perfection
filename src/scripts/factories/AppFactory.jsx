@@ -6,7 +6,7 @@ var React = require('react/addons'),
 var StoresMixin = function (stores) {
     return {
         getInitialState: function () {
-            return this._getStateFromStores();
+            return this.getState();
         },
         componentDidMount: function () {
             _.map(stores, function (store) {
@@ -19,7 +19,7 @@ var StoresMixin = function (stores) {
             }.bind(this));
         },
         _onChange: function () {
-            this.setState(this._getStateFromStores());
+            this.setState(this.getState());
         }
     };
 };
