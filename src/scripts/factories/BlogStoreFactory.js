@@ -91,20 +91,23 @@ module.exports = {
                     date = new Date();
                     args._id = date.toISOString();
                 case BlogActions._constants.UPDATE:
-                    if (args.postType === 'photo') {
-                        if (args.photos.length > 1) {
-                            args.postType = 'photoset';
-                        }
-                    }
+                    switch (args.postType) {
+                        case 'photo':
+                        case 'video':
+                        case 'audio':
+                            if (args.attachments.length > 1) {
+                                args.postType += 'set';
+                            }
 
-                    if (args.postType === 'photo' || args.postType === 'photoset') {
-                        attachments = args.photos;
+                            attachments = args.attachments;
+                            break;
+                        default:
                     }
 
                     return db.put(args, handleError(function (doc) {
                         function putAttachment(doc, attachments) {
+                            var attachment = _.first(attachments);
                             if (attachments.length) {
-                                var attachment = _.first(attachments);
                                 db.putAttachment(doc.id, attachment.name, doc.rev, attachment, attachment.type, function (error, doc) {
                                     putAttachment(doc, _.rest(attachments));
                                 });

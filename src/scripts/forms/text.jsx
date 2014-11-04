@@ -20,7 +20,7 @@ module.exports = React.createClass({
     render: function () {
         return <form onSubmit={this.handleSubmit}>
             <BS.Input type="text" valueLink={this.linkState('title')} placeholder="Title" />
-            <BS.Input type="textarea" valueLink={this.linkState('body')} placeholder="Body" />
+            <BS.Input type="textarea" valueLink={this.linkState('body')} placeholder="Body" required />
             <input type="submit" className="btn btn-primary" value="Post" />
         </form>;
     }

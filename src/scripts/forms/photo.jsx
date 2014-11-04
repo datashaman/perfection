@@ -10,17 +10,17 @@ module.exports = React.createClass({
       return {
         postType: 'photo',
         url: '',
-        photos: []
+        attachments: []
       };
   },
   handleSubmit: function (e) {
       var state = this.state,
-          photos = this.refs.photos.getDOMNode().children[0].files;
+          attachments = this.refs.attachments.getDOMNode().children[0].files;
 
       e.preventDefault();
 
       state = _.extend(state, {
-          photos: photos
+          attachments: attachments
       });
 
       BlogActions.create(state)
@@ -28,7 +28,7 @@ module.exports = React.createClass({
   render: function () {
     return <form onSubmit={this.handleSubmit}>
       <BS.Input type="text" valueLink={this.linkState('url')} placeholder="URL" />
-      <BS.Input type="file" ref="photos" placeholder="File" multiple />
+      <BS.Input type="file" ref="attachments" placeholder="File" multiple />
       <input type="submit" className="btn btn-primary" value="Post" />
     </form>;
   }
