@@ -5,18 +5,15 @@ var _ = require('lodash')
 var BS = require('react-bootstrap');
 
 module.exports = React.createClass({
+    renderCaption: function (doc) {
+        return <div className="caption">{ doc.caption }</div>;
+    },
     render: function() {
         var doc = this.props.doc;
 
-        if (doc.caption) {
-            return <li className="post video">
-                <div className="caption">{ doc.caption }</div>
-                <iframe src={ doc.url } width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen />
-              </li>;
-        } else {
-            return <li className="post video">
-                <iframe src={ doc.url } width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen />
-              </li>;
-        }
+        return <li className="post post-video">
+            { doc.caption ? this.renderCaption(doc) : '' }
+            <iframe src={ doc.url } width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen />
+            </li>;
     }
 });

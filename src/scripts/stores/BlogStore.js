@@ -1,4 +1,3 @@
-var process = require('process');
 var BlogStoreFactory = require('../factories/BlogStoreFactory');
 
 module.exports = BlogStoreFactory.createStore('blog', {

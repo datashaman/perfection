@@ -68,12 +68,6 @@ module.exports = function (grunt) {
       }
     },
 
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js'
-      }
-    },
-
     copy: {
       dist: {
         files: [
@@ -121,10 +115,7 @@ module.exports = function (grunt) {
                 'src/styles/**/*.sass'
             ],
             options: {
-                cwd: 'src',
-                exclude: [
-                    'bower_components/react/react.js'
-                ]
+                cwd: 'src'
             }
         }
     }
@@ -136,16 +127,14 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      /** 'open:dev', */
+      // 'open:dev',
       'webpack-dev-server'
     ]);
   });
 
   grunt.loadNpmTasks('grunt-wiredep');
 
-  grunt.registerTask('test', ['karma']);
-
   grunt.registerTask('build', ['clean', 'copy', 'webpack']);
 
-  grunt.registerTask('default', []);
+  grunt.registerTask('default', ['build']);
 };

@@ -27,12 +27,12 @@ module.exports = React.createClass({
             layout = layouts[attachments.length];
 
         if (doc.caption) {
-            return <li className="post photoset">
+            return <li className="post post-photoset">
                 <div ref="grid" class="grid" data-layout={ layout }>{ attachments }</div>
                 <div className="caption">{ doc.caption }</div>
             </li>;
         } else {
-            return <li className="post photoset">
+            return <li className="post post-photoset">
                 <div ref="grid" class="grid" data-layout={ layout }>{ attachments }</div>
             </li>;
         }

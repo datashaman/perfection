@@ -1,14 +1,26 @@
 'use strict';
 
-require('../../styles/normalize.css');
+// require('../../styles/normalize.css');
 // require('../../styles/main.css');
 
 var _ = require('lodash')
+var React = require('react/addons');
 var BS = require('react-bootstrap');
 
-var AppFactory = require('../factories/AppFactory');
+var StoresMixin = require('../mixins/StoresMixin');
 var BlogActions = require('../actions/BlogActions');
 var BlogStore = require('../stores/BlogStore');
+
+var PostTypes = {
+    text: require('../posts/text'),
+    photo: require('../posts/photo'),
+    photoset: require('../posts/photoset'),
+    quote: require('../posts/quote'),
+    link: require('../posts/link'),
+    chat: require('../posts/chat'),
+    audio: require('../posts/audio'),
+    video: require('../posts/video')
+};
 
 function getKey(doc) {
     return doc._id + ':' + doc._rev;
@@ -16,13 +28,19 @@ function getKey(doc) {
 
 function renderPost(row) {
     var doc = row.doc;
-    return React.createElement(require('../posts/' + doc.postType), { key: getKey(doc), doc: doc });
+    var PostType = PostTypes[doc.postType];
+    var element = React.createElement(PostType, { key: getKey(doc), doc: doc });
+    return element;
 }
 
-var BlogApp = AppFactory.createApp({
-    blog: BlogStore
-}, {
-    mixins: [ React.addons.LinkedStateMixin ],
+var BlogApp = React.createClass({
+    stores: {
+        blog: BlogStore
+    },
+    mixins: [ StoresMixin, React.addons.LinkedStateMixin ],
+    getInitialState: function () {
+        return this.getState();
+    },
     getState: function () {
         var state = {
             blog: this.stores.blog.getState(),
@@ -42,8 +60,8 @@ var BlogApp = AppFactory.createApp({
         return <BS.Grid style={{ marginTop: 12 }}>
             <BS.Row>
                 <BS.Col md="6">
-                    <p>Connected to {this.stores.blog.options.remote}</p>
-                    <ul id="posts">
+                    <p>Connected to <span className="remote">{this.stores.blog.options.remote}</span></p>
+                    <ul className="posts">
                         {posts}
                     </ul>
                 </BS.Col>
@@ -63,12 +81,6 @@ var BlogApp = AppFactory.createApp({
                 </BS.Col>
             </BS.Row>
         </BS.Grid>;
-    },
-    componentDidMount: function() {
-        return;
-        setInterval(function() {
-            this.forceUpdate();
-        }.bind(this), 1000);
     }
 });
 

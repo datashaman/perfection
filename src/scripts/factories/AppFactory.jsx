@@ -3,27 +3,6 @@
 var React = require('react/addons'),
     _ = require('lodash');
 
-var StoresMixin = function (stores) {
-    return {
-        getInitialState: function () {
-            return this.getState();
-        },
-        componentDidMount: function () {
-            _.map(stores, function (store) {
-                store.addChangeListener(this._onChange);
-            }.bind(this));
-        },
-        componentWillUnmount: function () {
-            _.map(stores, function (store) {
-                store.removeChangeListener(this._onChange);
-            }.bind(this));
-        },
-        _onChange: function () {
-            this.setState(this.getState());
-        }
-    };
-};
-
 var createApp = function (stores, options) {
     options.stores = stores;
     options.mixins = options.mixins || [];

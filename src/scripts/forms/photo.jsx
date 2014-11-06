@@ -9,6 +9,7 @@ module.exports = React.createClass({
   getInitialState: function() {
       return {
         postType: 'photo',
+        caption: '',
         url: '',
         attachments: []
       };
@@ -29,6 +30,7 @@ module.exports = React.createClass({
     return <form onSubmit={this.handleSubmit}>
       <BS.Input type="text" valueLink={this.linkState('url')} placeholder="URL" />
       <BS.Input type="file" ref="attachments" placeholder="File" multiple />
+      <BS.Input type="text" valueLink={this.linkState('caption')} placeholder="Caption" />
       <input type="submit" className="btn btn-primary" value="Post" />
     </form>;
   }

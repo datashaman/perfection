@@ -8,7 +8,7 @@ describe('Main', function () {
     container.id = 'content';
     document.body.appendChild(container);
 
-    TodoApp = require('../../../src/scripts/components/TodoApp.jsx');
+    TodoApp = require('../../../src/scripts/elements/TodoApp.jsx');
     component = TodoApp();
   });
 

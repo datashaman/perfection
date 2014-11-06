@@ -1,22 +1,23 @@
 'use strict';
 
 var React = require('react');
-var _ = require('lodash')
-var BS = require('react-bootstrap');
 
 module.exports = React.createClass({
-    render: function() {
+    renderLink: function (doc) {
+        return <a href={doc.url} class="link">{doc.name}</a>;
+    },
+    render: function () {
         var doc = this.props.doc;
 
         if (doc.description) {
-            return <li className="post link">
-                <a href={doc.url} class="link">{doc.name}</a>
+            return <li className="post post-link">
+                {this.renderLink(doc)}
                 <div class="description">{doc.description}</div>
-              </li>;
+            </li>;
         } else {
-            return <li className="post link">
-                <a href={doc.url} class="link">{doc.name}</a>
-              </li>;
+            return <li className="post post-link">
+                {this.renderLink(doc)}}
+            </li>;
         }
     }
 });

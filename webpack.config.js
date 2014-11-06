@@ -45,7 +45,7 @@ module.exports = {
 
     loaders: [{
       test: /\.jsx$/,
-      loader: 'react-hot!jsx-loader?harmony'
+      loader: 'react-hot!jsx-loader?harmony!envify-loader'
     }, {
       test: /\.js$/,
       loader: 'envify-loader'
@@ -56,6 +56,12 @@ module.exports = {
       test: /\.(png|jpg)$/,
       loader: 'url-loader?limit=8192'
     }]
+  },
+
+  jshint: {
+      camelcase: true,
+      emitErrors: true,
+      failOnHint: true
   },
 
   plugins: [
