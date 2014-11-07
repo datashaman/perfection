@@ -1,6 +1,6 @@
 # perfection
 
-[![Travis build status](http://img.shields.io/travis/datashaman/perfection.svg)](https://travis-ci.org/datashaman/perfection)
+[![Build Status](https://travis-ci.org/datashaman/perfection.svg?branch=master)](https://travis-ci.org/datashaman/perfection)
 
 Single-thread chat app! j/k
 
