@@ -23,4 +23,4 @@ The world's most private chat app (if you use secure HTTPS URLs)!
 
 ## License
 
-MIT, see [LICENSE.md](http://github.com/datashaman/perfection/blob/master/LICENSE.md) for details.
+MIT, see [LICENSE.md](http://github.com/datashaman/perfection/blob/master/LICENSE.md) for more details.
