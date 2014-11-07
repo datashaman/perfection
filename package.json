@@ -9,15 +9,27 @@
   "dist": "dist",
   "mainInput": "app",
   "mainOutput": "app",
-  "script": {
-    "test": "jest"
+  "scripts": {
+    "test": "./node_modules/.bin/jest"
   },
   "jest": {
-      "moduleFileExtensions": [ "js", "json", "jsx" ],
-      "scriptPreprocessor": "jest/preprocessor.js",
-      "testFileExtensions": [ "js", "json", "jsx" ],
-      "testPathDirs": [ "src/scripts/" ],
-      "unmockedModulePathPatterns": [ "<rootDir>/node_modules/react" ]
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "scriptPreprocessor": "jest/preprocessor.js",
+    "testFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "testPathDirs": [
+      "src/scripts/"
+    ],
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   },
   "dependencies": {
     "flux": "^2.0.1",
@@ -39,6 +51,7 @@
     "grunt-webpack": "~1.0.8",
     "grunt-wiredep": "^1.9.0",
     "jest": "^0.1.37",
+    "jest-cli": "^0.1.18",
     "jshint-loader": "~0.8.0",
     "json-loader": "^0.5.1",
     "jsx-loader": "~0.12.1",
