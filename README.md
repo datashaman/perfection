@@ -1,7 +1,7 @@
 # perfection
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
-[![Travis build status](https://travis-ci.org/datashaman/perfection.png?branch=master)](https://travis-ci.org/datashaman/perfection)
+[![Travis build status](http://img.shields.io/travis/datashaman/perfection.svg)](https://travis-ci.org/datashaman/perfection)
 
 Single-thread chat app! j/k
 
